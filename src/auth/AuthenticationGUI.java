@@ -1,10 +1,7 @@
 package auth;
 
-
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-
-import auth.AuthenticationService;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -15,7 +12,7 @@ import java.util.function.BiConsumer;
 /**
  * Interfaz gráfica para el servicio de autenticación
  * Maneja tanto el login como el registro de usuarios
- */
+*/
 public class AuthenticationGUI extends JFrame {
 
     private AuthenticationService authService;
@@ -35,7 +32,7 @@ public class AuthenticationGUI extends JFrame {
      * Constructor de la interfaz de autenticación
      * @param authService Servicio de autenticación
      * @param onCloseCallback Callback que se ejecuta al cerrar la ventana
-     */
+    */
     public AuthenticationGUI(AuthenticationService authService, BiConsumer<Boolean, String> onCloseCallback) {
         this.authService = authService;
         

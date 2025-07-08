@@ -7,9 +7,9 @@ import model.FileHandler;
 import model.User;
 
 /**
- * Clase principal para ejecutar la aplicación ConnectHub
+ * Clase principal para ejecutar la aplicación CodeQuest
  * Punto de entrada del sistema con interfaz gráfica
- */
+*/
 public class CodeQuest {
 
     private DataManager<User> userController;
@@ -19,7 +19,7 @@ public class CodeQuest {
     private static AuthenticationGUI authGUI;
 
     /**
-     * Constructor de la aplicación ConnectHub
+     * Constructor de la aplicación CodeQuest
      * Inicializa los controladores de datos y el servicio de autenticación
      */
     public CodeQuest() {
@@ -28,11 +28,7 @@ public class CodeQuest {
         this.userFileHandler = new FileHandler<>("users.dat");
     }
 
-    /**
-     * Método principal que inicia la aplicación
-     * @param args argumentos de línea de comandos
-     */
-    public void main() {
+    public void start() {
                 
         // Crear el servicio de autenticación
         try {
@@ -49,7 +45,9 @@ public class CodeQuest {
 
     private void callbackAuthentication(Boolean isLogin, String username) {
         if (isLogin) {
+            currentUser = userController.findDataById(username.hashCode());
             // Inicializa la aplicación
+            
         } 
     }
 
@@ -60,22 +58,5 @@ public class CodeQuest {
             authGUI.setVisible(true);
             currentUser = null; // Limpiar el usuario actual
         } 
-    }
-    
-    /**
-     * Método auxiliar para mostrar información sobre la aplicación
-     */
-    public static void showAbout() {
-        String aboutText = "ConnectHub v1.0\n" +
-                          "Una red social moderna\n" +
-                          "Desarrollado con Java Swing\n\n" +
-                          "Características:\n" +
-                          "• Autenticación de usuarios\n" +
-                          "• Publicaciones multimedia\n" +
-                          "• Feed en tiempo real\n" +
-                          "• Interfaz intuitiva";
-        
-        JOptionPane.showMessageDialog(null, aboutText, "Acerca de ConnectHub", 
-                                    JOptionPane.INFORMATION_MESSAGE);
     }
 }

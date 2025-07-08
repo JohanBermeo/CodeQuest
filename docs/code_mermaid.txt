@@ -1,0 +1,160 @@
+classDiagram
+    class CodeQuest {
+        -AuthenticationService authService
+        -User currentUser
+        +CodeQuest()
+        -start() void
+    }
+
+    class AuthenticationService {
+        -DataManager~User~ userController
+        -FileHandler~User~ userDataHandler
+        +AuthenticationService()
+        +login(String, String) LoginResult
+        +createAccount(String, String, Date) User
+        -validateUserData(String, String, Date) void
+    }
+
+    class FileHandler~T~ {
+        -String basePath
+        +FileHandler(String)
+        +save(List~T~) void
+        +load() List~T~
+    }
+
+    class FileHandlerSynchronous~T~ {
+        -String basePath
+        FileHandlerSynchronous(String)
+        +save(List~T~) void
+        +load() List~T~
+    }
+
+    class DataManager~T~ {
+        -List~T~ data
+        +DataManager()
+        +setData(List~T~) void
+        +getData() List~T~
+        +addData(T) void
+        +deleteData(int) boolean
+        +findDataById(int) T
+        +getDataCount() int
+        +isEmpty() boolean
+        +clearData() void
+        +existsById(int) boolean
+    }
+
+    %% class Publication {
+       
+    %% }
+
+    class User {
+        -int id
+        -String username
+        -String passwordHash
+        -String email
+        -Date birthday
+        -Date dateCreated
+        +User(String, String, Date)
+        +validatePassword(String) boolean
+        -hashPassword(String) String
+        +getId() int
+        +getUsername() String
+        +getEmail() String
+        +getBirthday() Date
+    }
+
+    class App {
+        -User usuario
+        -DataManager~Challenge~ challengesController
+        -FileHandlerSynchronous~Challenge~ challengesDataHandler
+        -DataManager~Quest~ QuestsController
+        -FileHandlerSynchronous~Quest~ QuestsDataHandler
+        +uploadChallenge() void
+        +addSolution(Challenge) void
+        +uploadQuest() void
+        +showTopChallenges() List~Challenge~
+        +showTopQuests() List~Quest~
+    }
+
+    class AppGUI {
+        User user
+        Consurmer onExitCallback
+        App app
+        -initializeComponents() void
+    }
+
+    class Identifiable {
+        <<interface>>
+        -int id
+        +getId() int
+    }
+
+       class Challenge {
+        -int id
+        -List~Solution~ Solutions
+        -String title
+        -String description
+        -String author
+        -int likes
+        +Challenge(String title, String description, String author)
+        +getId() int
+        +setId(String id) void
+        +getTitle() String
+        +setTitle(String title) void
+        +getDescription() String
+        +setDescription(String description) void
+        +getAuthor() String
+        +setAuthor(String author) void
+        +addLike() void
+        +getLikes() int
+        +getSolutions() -List~Solution~
+    }
+
+    class Solution {
+        -int id
+        -String Explication
+        -String Author
+        -int Likes
+        +Solution(Challenge challenge)
+        +getId() int
+        +getLikes() int
+        +addLike()
+        +getExplication() String
+    }
+
+    class Quest {
+        -int id
+        -String content
+        -String Author
+        -int likes
+        +Quest(String content, String author)
+        +getLikes() int
+        +addLikes()
+        +getContent() String
+    }
+
+    class NotificationService {
+        NotificationService()
+        +sendEmail(String)
+    }
+
+    %% Relaciones
+    CodeQuest *-- AuthenticationService : contains
+    CodeQuest o-- User : currentUser
+
+    AuthenticationService *-- DataManager : userController
+    AuthenticationService *-- FileHandler : userDataHandler
+    AuthenticationService ..> User : manages
+
+    AppGUI *-- App
+    App --o User
+    App *-- DataManager 
+    App *-- FileHandlerSynchronous
+    App *-- NotificationService
+
+    Identifiable <|.. User : implements
+    Identifiable <|.. Challenge : implements
+    Identifiable <|.. Solution : implements
+    Identifiable <|.. Quest : implements
+
+    Challenge *-- Solution

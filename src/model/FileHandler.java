@@ -10,8 +10,12 @@ import java.util.List;
 public class FileHandler<T extends Serializable> { 
     private String basePath;
     
-    public FileHandler(String basePath) {
-        this.basePath = "data\\" + basePath;
+      public FileHandler(String basePath) {
+        File directory = new File("data");
+        if (!directory.exists()) {
+            directory.mkdirs();  // crea la carpeta si no existe
+        }
+        this.basePath = "data/" + basePath; // usa / que funciona en todos los sistemas
     }
     
     public void save(List<T> data) throws Exception {

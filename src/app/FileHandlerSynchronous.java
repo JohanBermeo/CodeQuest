@@ -29,7 +29,7 @@ public class FileHandlerSynchronous<T>{
                 FileLock lock = channel.tryLock();
 
                 if (lock != null) {
-                    try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file))) {
+                    try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(raf.getFD()))) {
                         oos.writeObject(data);
                         saved = true;
                     } finally {

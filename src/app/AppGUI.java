@@ -70,11 +70,11 @@ public class AppGUI extends JFrame {
             buttonPanel.add(button);
         }
 
+        // Pasarle los datos que el usuario ponga en todos los ActionsListeners para crear los challenges y quests
         uploadChallengeButton.addActionListener(e -> app.uploadChallenge());
 
         addSolutionButton.addActionListener(e -> {
-            Challenge challenge = new Challenge("001", "Título de Ejemplo", "Descripción del reto", user.getUsername());
-            app.addSolution(challenge);
+            app.addSolution();
         });
 
         uploadQuestButton.addActionListener(e -> app.uploadQuest());

@@ -25,8 +25,8 @@ public class CodeQuest {
      */
     public CodeQuest() {
         // Inicializar el controlador de datos de usuarios
-        this.userController = new DataManager<>();
-        this.userFileHandler = new FileHandler<>("users.dat");
+        this.userController = new DataManager<User>();
+        this.userFileHandler = new FileHandler<User>("users.dat");
     }
 
     public void start() {

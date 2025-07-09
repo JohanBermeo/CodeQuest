@@ -1,7 +1,5 @@
 package app;
 
-import model.FileHandler;
-
 import java.io.*;
 import java.nio.channels.FileChannel;
 import java.nio.channels.FileLock;
@@ -10,14 +8,13 @@ import java.util.List;
 /**
  * Manejador de archivos que evita edición simultánea (con bloqueo de archivo).
  */
-public class FileHandlerSynchronous<T> implements FileHandler<T> {
+public class FileHandlerSynchronous<T>{
     private final String basePath;
 
     public FileHandlerSynchronous(String basePath) {
         this.basePath = basePath;
     }
 
-    @Override
     public void save(List<T> data) throws Exception {
         File file = new File(basePath);
         boolean saved = false;
@@ -52,7 +49,6 @@ public class FileHandlerSynchronous<T> implements FileHandler<T> {
         }
     }
 
-    @Override
     @SuppressWarnings("unchecked")
     public List<T> load() throws Exception {
         File file = new File(basePath);

@@ -17,7 +17,3 @@ bin/*
 Thumbs.
 
 *.log
-
-.mvn/
-mvnw
-mvnw.cmd

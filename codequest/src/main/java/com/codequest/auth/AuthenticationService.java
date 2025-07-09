@@ -28,11 +28,19 @@ public class AuthenticationService {
     }
     
     public boolean login(String username, String password) {
-        User user = userController.findDataById(username.hashCode());
-        if (user == null || !user.validatePassword(password)) {
+        // Validaciones de entrada
+        if (username == null || username.trim().isEmpty()) {
             return false;
         }
-        return true;
+        if (password == null || password.length() < 8) {
+            return false;
+        }
+        User user = userController.findDataById(username.hashCode());
+        if (user == null) {
+            return false;
+        }
+        // Compara la contraseña
+        return user.validatePassword(password);
     }
     
     public void createAccount(String username, String password,String email, Date birthday) throws Exception {
@@ -49,14 +57,14 @@ public class AuthenticationService {
         userFileHandler.save(userController.getData());
     }
     
-    private void validateUserData(String username, String password,String email, Date birthday) throws Exception {
+    private void validateUserData(String username, String password, String email, Date birthday) throws Exception {
         if (username == null || username.trim().isEmpty()) {
             throw new Exception("Usuario no puede estar vacío");
         }
         if (userController.existsById(username.hashCode())) {
             throw new Exception("El nombre de usuario ya está en uso");
         }
-        if (password == null || password.length() < 8) {
+        if (password == null || password.length() <= 8) {
             throw new Exception("Contraseña debe ser mayor a 8 caracteres");
         }
         if (email == null || !email.matches("^[\\w.-]+@[\\w.-]+\\.\\w+$")) {
@@ -65,6 +73,5 @@ public class AuthenticationService {
         if (birthday == null) {
             throw new Exception("Fecha de nacimiento es requerida");
         }
-        // Más validaciones...
     }
 }

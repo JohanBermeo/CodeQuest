@@ -3,32 +3,32 @@ package model;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
 
 /**
  * Manejador de archivos genérico
  */
-public class FileHandler<T extends Serializable> { 
-    private String basePath;
+public class FileHandler<T extends java.io.Serializable> { 
+    private String filePath;
     
-    public FileHandler(String basePath) {
-        this.basePath = "data\\" + basePath;
+    public FileHandler(String filePath) {
+        this.filePath = filePath;
     }
     
     public void save(List<T> data) throws Exception {
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(basePath))) {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filePath))) {
             oos.writeObject(data);
-        } catch (Exception e) {
-            throw new Exception("Error al guardar datos", e);
         }
     }
     
     @SuppressWarnings("unchecked")
     public List<T> load() throws Exception {
-        File file = new File(basePath);
+        File file = new File(filePath);
         if (!file.exists()) {
             return new ArrayList<>();
         }
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(basePath))) {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filePath))) {
             return (List<T>) ois.readObject();
         } catch (EOFException e) {
             return new ArrayList<>();
@@ -38,6 +38,6 @@ public class FileHandler<T extends Serializable> {
     }
     
     public String getBasePath() {
-        return basePath;
+        return filePath;
     }
 }

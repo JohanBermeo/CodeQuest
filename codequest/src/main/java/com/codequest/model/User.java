@@ -28,7 +28,7 @@ public class User implements Identifiable, Serializable {
     }
     
     public boolean validatePassword(String password) {
-        return hashPassword(password).equals(this.passwordHash);
+        return this.passwordHash.equals(hashPassword(password));
     }
     
     private String hashPassword(String password) {
@@ -40,7 +40,7 @@ public class User implements Identifiable, Serializable {
     // Getters
     @Override
     public int getId() {
-        return id;
+        return username.hashCode();
     }
 
     public boolean idEquals(int id) {

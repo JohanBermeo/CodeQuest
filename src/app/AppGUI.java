@@ -9,7 +9,7 @@ import model.User;
 import java.util.*;
 import model.content.*;
 
-public class AppGUI {
+public class AppGUI extends JFrame {
     private User user;
     private Consumer<Void> onExitCallback;
     private App app;

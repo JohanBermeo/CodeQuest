@@ -6,7 +6,7 @@ import model.DataManager;
 import model.FileHandler;
 import model.User;
 import app.AppGUI;
-import app.App;
+import app.App; 
 /**
  * Clase principal para ejecutar la aplicación CodeQuest
  * Punto de entrada del sistema con interfaz gráfica
@@ -48,8 +48,9 @@ public class CodeQuest {
         if (isLogin) {
             currentUser = userController.findDataById(username.hashCode());
             // Inicializa la aplicación
-             App app = new App();
-            new AppGUI(currentUser, app, (v) -> callbackMenu(true));
+            App app = new App();
+            AppGUI appGUI = new AppGUI(currentUser, app, (v) -> callbackMenu(true));
+            appGUI.setVisible(true);
         } 
     }
 

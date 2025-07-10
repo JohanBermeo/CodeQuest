@@ -1,13 +1,18 @@
-package model.content;
+package com.codequest.model.content;
 
-public class Challenge {
-   private String id;
+import java.io.Serializable;
+
+import com.codequest.model.interfaces.Identifiable;
+
+public class Challenge implements Identifiable, Serializable {
+   private static final long serialVersionUID = 1L;
+   private int id;
    private String title;
    private String description;
    private String author;
    private int likes;
 
-   public Challenge(String id, String title, String description, String author) {
+   public Challenge(int id, String title, String description, String author) {
       this.id = id;
       this.title = title;
       this.description = description;
@@ -15,12 +20,8 @@ public class Challenge {
    }
 
    // Getters and Setters
-   public String getId() {
+   public int getId() {
       return id;
-   }
-
-   public void setId(String id) {
-      this.id = id;
    }
 
    public String getTitle() {

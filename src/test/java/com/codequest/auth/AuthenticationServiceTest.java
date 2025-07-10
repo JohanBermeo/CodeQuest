@@ -1,10 +1,10 @@
-package auth;
+package com.codequest.auth;
 
-
-import model.User;
-import model.DataManager;
-import model.FileHandler;
 import java.util.Date;
+
+import com.codequest.model.User;
+import com.codequest.model.DataManager;
+import com.codequest.model.FileHandler;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

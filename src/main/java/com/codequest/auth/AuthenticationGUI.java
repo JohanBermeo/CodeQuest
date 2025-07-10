@@ -1,4 +1,4 @@
-package auth;
+package com.codequest.auth;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;

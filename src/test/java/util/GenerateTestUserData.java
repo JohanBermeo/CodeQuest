@@ -1,10 +1,12 @@
-package java.base;
+package util;
 
-import model.User;
-import model.DataManager;
+
 import java.util.Date;
 import java.util.ArrayList;
 import java.io.File;
+
+import com.codequest.model.User;
+import com.codequest.model.DataManager;
 
 public class GenerateTestUserData {
     public static void main(String[] args) {

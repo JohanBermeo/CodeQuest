@@ -1,13 +1,10 @@
-
-package model;
-
+package com.codequest.model;
 
 import java.util.ArrayList;
-import model.interfaces.Identifiable;
 import java.util.Iterator;
 import java.util.List;
 import java.io.File;
-
+import com.codequest.model.interfaces.Identifiable;
 
 /**
  * Manejador genérico de datos

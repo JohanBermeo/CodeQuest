@@ -1,6 +1,6 @@
-package model.content;
+package com.codequest.model.content;
 
-import model.interfaces.Publication;
+import com.codequest.model.interfaces.Publication;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;

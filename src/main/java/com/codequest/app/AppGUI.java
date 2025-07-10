@@ -1,13 +1,15 @@
-package app;
+package com.codequest.app;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.List;
 import java.util.function.Consumer;
-import model.User;
-import java.util.*;
-import model.content.*;
+import com.codequest.model.User; 
+import com.codequest.model.content.Challenge;
+import com.codequest.model.content.Quest;
+import com.codequest.app.App;
+import com.codequest.model.content.Solution;
 
 public class AppGUI extends JFrame {
     private User user;

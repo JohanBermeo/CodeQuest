@@ -1,7 +1,7 @@
-package model;
+package com.codequest.model;
 
 import java.io.Serializable; 
-import model.interfaces.Identifiable;
+import com.codequest.model.interfaces.Identifiable;
 import java.util.Date;
 
 /**

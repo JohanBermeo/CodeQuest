@@ -1,15 +1,18 @@
-package app;
+package com.codequest.app;
 
-import model.content.Challenge;
-import model.content.Quest;
-import model.content.Solution;
-import model.content.ForumPost;
-import model.User;
-import ui.components.FileUploadDialog;
-import ui.utils.FileUploadUtils;
-import java.util.*;
+import java.util.List;
 import java.io.IOException;
 import javax.swing.JFrame;
+
+import com.codequest.model.DataManager;
+import com.codequest.app.FileHandlerSynchronous;
+import com.codequest.model.content.Challenge;
+import com.codequest.model.content.Quest;
+import com.codequest.model.content.Solution;
+import com.codequest.model.content.ForumPost;
+import com.codequest.model.User;
+import com.codequest.ui.utils.FileUploadUtils;
+import com.codequest.ui.components.FileUploadDialog;
 
 public class App {
     private User usuario;
@@ -24,7 +27,8 @@ public class App {
 
     public App() {
         this.usuario = usuario;
-    	this.challengesController = new DataManager<>();
+        // Aquí usamos hashCode, pero puedes cambiarlo si tienes otro criterio
+    	this.challengesController = new DataManager<Challenge>();
     	this.questsController = new DataManager<>();
         this.solutionsController = new DataManager<>();
         this.forumPostsController = new DataManager<>();
@@ -38,7 +42,7 @@ public class App {
             return false;
         }
         try {
-            String id = UUID.randomUUID().toString();
+            int id = 1;
             Challenge challenge = new Challenge(id, title, description, usuario.getUsername());
             challengesController.addData(challenge);
             challengesDataHandler.save(challengesController.getData());
@@ -67,7 +71,7 @@ public class App {
             return false;
         }
         try {
-            String id = UUID.randomUUID().toString();
+            int id = 1;
             Quest quest = new Quest(id, title, description, usuario.getUsername());
             questsController.addData(quest);
             questsDataHandler.save(questsController.getData());

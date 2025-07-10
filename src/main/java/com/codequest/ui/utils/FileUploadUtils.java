@@ -1,4 +1,4 @@
-package ui.utils;
+package com.codequest.ui.utils;
 
 import java.io.File;
 import java.io.IOException;

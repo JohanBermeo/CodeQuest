@@ -1,4 +1,4 @@
-package model;
+package com.codequest.model;
 
 import java.io.*;
 import java.util.ArrayList;

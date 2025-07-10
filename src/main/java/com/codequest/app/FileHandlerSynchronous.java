@@ -1,4 +1,4 @@
-package app;
+package com.codequest.app;
 
 import java.io.*;
 import java.nio.channels.FileChannel;

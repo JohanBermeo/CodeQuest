@@ -1,12 +1,14 @@
+package com.codequest;
+
 import javax.swing.*;
 
-import auth.AuthenticationService;
-import auth.AuthenticationGUI;
-import model.DataManager;
-import model.FileHandler;
-import model.User;
-import app.AppGUI;
-import app.App; 
+import com.codequest.auth.*;
+import com.codequest.model.FileHandler;
+import com.codequest.model.DataManager;
+import com.codequest.model.User;
+import com.codequest.app.App;
+import com.codequest.app.AppGUI;
+
 /**
  * Clase principal para ejecutar la aplicación CodeQuest
  * Punto de entrada del sistema con interfaz gráfica

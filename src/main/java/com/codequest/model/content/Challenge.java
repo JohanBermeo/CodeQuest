@@ -1,19 +1,21 @@
 package com.codequest.model.content;
 
+import java.util.List;
+import java.util.ArrayList;
 import java.io.Serializable;
 
 import com.codequest.model.interfaces.Identifiable;
 
 public class Challenge implements Identifiable, Serializable {
-   private static final long serialVersionUID = 1L;
+   private static int idCounter = 1;
    private int id;
    private String title;
    private String description;
    private String author;
-   private int likes;
+   private List<Integer> solutionsIds = new ArrayList<>();
 
-   public Challenge(int id, String title, String description, String author) {
-      this.id = id;
+   public Challenge(String title, String description, String author) {
+      this.id = idCounter++;
       this.title = title;
       this.description = description;
       this.author = author;
@@ -48,11 +50,14 @@ public class Challenge implements Identifiable, Serializable {
       this.author = author;
    }
 
-   public void addLike() {
-      likes += 1;
+   public List<Integer> getSolutions() {
+      return solutionsIds;
    }
 
-   public int getLikes() {
-      return likes;
+   public void addSolution(int solutionId) {
+      if (solutionsIds == null) {
+         solutionsIds = new ArrayList<>();
+      }
+      solutionsIds.add(solutionId);
    }
 }

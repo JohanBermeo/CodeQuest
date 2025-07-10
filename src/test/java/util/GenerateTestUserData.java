@@ -21,9 +21,9 @@ public class GenerateTestUserData {
         dataManager.setData(new ArrayList<>());
         
         // Agregar usuarios de prueba
-        dataManager.addData(new User("admin", "admin123", "admin@test.com", new Date()));
-        dataManager.addData(new User("user1", "password1", "user1@test.com", new Date()));
-        dataManager.addData(new User("guest", "guest123", "guest@test.com", new Date()));
+        dataManager.addData(new User("admin", "Admin12345", new Date()));
+        dataManager.addData(new User("user1", "password", new Date()));
+        dataManager.addData(new User("guest", "guest12345", new Date()));
         
         dataManager.saveData();
 

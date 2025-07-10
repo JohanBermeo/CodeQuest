@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class ForumPost implements Publication, Serializable {
+public class ForumPost implements Publication {
     private static final long serialVersionUID = 1L;
 
     private String id;
@@ -54,33 +54,6 @@ public class ForumPost implements Publication, Serializable {
     @Override
     public Date getCreationDate() {
         return new Date(creationDate.getTime());
-    }
-
-    @Override
-    public int getLikes() {
-        return likes;
-    }
-
-    @Override
-    public void addLike() {
-        likes++;
-    }
-
-    @Override
-    public List<String> getAttachments() {
-        return new ArrayList<>(attachments);
-    }
-
-    @Override
-    public void addAttachment(String filePath) {
-        if (filePath != null && !filePath.isEmpty()) {
-            attachments.add(filePath);
-        }
-    }
-
-    @Override
-    public String getType() {
-        return "ForumPost";
     }
 
     public String getCategory() {

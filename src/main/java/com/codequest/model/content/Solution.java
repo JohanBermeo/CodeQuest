@@ -1,89 +1,34 @@
 package com.codequest.model.content;
 
-import com.codequest.model.interfaces.Publication;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
-public class Solution implements Publication, Serializable {
-    private static final long serialVersionUID = 1L;
+import com.codequest.model.interfaces.Identifiable;
 
-    private String id;
-    private String challengeId;
-    private String title;
-    private String content;
-    private String author;
-    private Date creationDate;
-    private int likes;
-    private List<String> attachments;
+public class Solution implements Identifiable, Serializable {
+   private static int idCounter = 1;
+   private int id;
+   private String author;
+   private String explication;
+   private int challengeId;
 
-    public Solution(String id, String challengeId, String title, String content, String author) {
-        this.id = id;
-        this.challengeId = challengeId;
-        this.title = title;
-        this.content = content;
-        this.author = author;
-        this.creationDate = new Date();
-        this.likes = 0;
-        this.attachments = new ArrayList<>();
-    }
+   public Solution(String author, String explication, int challengeId) {
+      this.id = idCounter++;
+      this.author = author;
+      this.explication = explication;
+      this.challengeId = challengeId;
+   }
 
-    @Override
-    public int getId() {
-        // Si el id es un String UUID, puedes usar hashCode o parsear a int si es numérico
-        // Aquí usamos hashCode, pero puedes cambiarlo si tienes otro criterio
-        return id.hashCode();
-    }
-
-    @Override
-    public String getTitle() {
-        return title;
-    }
-
-    @Override
-    public String getContent() {
-        return content;
-    }
-
-    @Override
-    public String getAuthor() {
-        return author;
-    }
-
-    @Override
-    public Date getCreationDate() {
-        return new Date(creationDate.getTime());
-    }
-
-    @Override
-    public int getLikes() {
-        return likes;
-    }
-
-    @Override
-    public void addLike() {
-        this.likes++;
-    }
-
-    @Override
-    public List<String> getAttachments() {
-        return new ArrayList<>(attachments);
-    }
-
-    @Override
-    public void addAttachment(String filePath) {
-        if (filePath != null && !filePath.trim().isEmpty()) {
-            this.attachments.add(filePath);
-        }
-    }
-
-    @Override
-    public String getType() {
-        return "Solution";
-    }
-
-    public String getChallengeId() {
-        return challengeId;
-    }
+   // Getters and Setters
+   public int getId() {
+      return id;
+   }
+   public String getAuthor() {
+      return author;
+   }
+   public String getExplication() {
+      return explication;
+   }
+   public int getChallengeId() {
+      return challengeId;
+   }
 }

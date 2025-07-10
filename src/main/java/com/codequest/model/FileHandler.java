@@ -13,7 +13,7 @@ public class FileHandler<T extends java.io.Serializable> {
     private String filePath;
     
     public FileHandler(String filePath) {
-        this.filePath = filePath;
+        this.filePath = "data\\"+filePath;
     }
     
     public void save(List<T> data) throws Exception {

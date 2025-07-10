@@ -1,11 +1,9 @@
 package com.codequest.app;
 
 import java.util.List;
-import java.io.IOException;
-import javax.swing.JFrame;
 
 import com.codequest.model.DataManager;
-import com.codequest.app.FileHandlerSynchronous;
+import com.codequest.model.FileHandlerSynchronous;
 import com.codequest.model.content.Challenge;
 import com.codequest.model.content.Quest;
 import com.codequest.model.content.Solution;
@@ -25,9 +23,8 @@ public class App {
     private DataManager<ForumPost> forumPostsController;
     private FileHandlerSynchronous<ForumPost> forumPostsDataHandler;
 
-    public App() {
+    public App(User usuario) {
         this.usuario = usuario;
-        // Aquí usamos hashCode, pero puedes cambiarlo si tienes otro criterio
     	this.challengesController = new DataManager<Challenge>();
     	this.questsController = new DataManager<>();
         this.solutionsController = new DataManager<>();
@@ -42,8 +39,7 @@ public class App {
             return false;
         }
         try {
-            int id = 1;
-            Challenge challenge = new Challenge(id, title, description, usuario.getUsername());
+            Challenge challenge = new Challenge(title, description, usuario.getUsername());
             challengesController.addData(challenge);
             challengesDataHandler.save(challengesController.getData());
             return true;
@@ -58,7 +54,6 @@ public class App {
             return false;
         }
         try {
-            challenge.addLike(); 
             challengesDataHandler.save(challengesController.getData());
             return true;
         } catch (Exception e) {
@@ -71,8 +66,7 @@ public class App {
             return false;
         }
         try {
-            int id = 1;
-            Quest quest = new Quest(id, title, description, usuario.getUsername());
+            Quest quest = new Quest(title, description, usuario.getUsername());
             questsController.addData(quest);
             questsDataHandler.save(questsController.getData());
             return true;

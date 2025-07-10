@@ -15,11 +15,13 @@ import com.codequest.app.AppGUI;
 */
 public class CodeQuest {
 
+    private User currentUser;
+    private App app;
+    private AppGUI appGUI;
+    private AuthenticationGUI authGUI;
+    private AuthenticationService authService;
     private DataManager<User> userController;
     private FileHandler<User> userFileHandler;
-    private static AuthenticationService authService;
-    private static User currentUser;
-    private static AuthenticationGUI authGUI;
 
     /**
      * Constructor de la aplicación CodeQuest
@@ -27,8 +29,8 @@ public class CodeQuest {
      */
     public CodeQuest() {
         // Inicializar el controlador de datos de usuarios
-        this.userController = new DataManager<User>();
         this.userFileHandler = new FileHandler<User>("users.dat");
+        this.userController = new DataManager<User>(userFileHandler);
     }
 
     public void start() {
@@ -50,8 +52,8 @@ public class CodeQuest {
         if (isLogin) {
             currentUser = userController.findDataById(username.hashCode());
             // Inicializa la aplicación
-            App app = new App();
-            AppGUI appGUI = new AppGUI(currentUser, app, (v) -> callbackMenu(true));
+            app = new App(currentUser); 
+            appGUI = new AppGUI(currentUser, app, (Boolean isChangeUser) -> callbackMenu(true));
             appGUI.setVisible(true);
         } 
     }
@@ -59,6 +61,7 @@ public class CodeQuest {
     private void callbackMenu(boolean isChangeUser) {
         if (isChangeUser) {
             // Cerrar la ventana actual y volver a mostrar la GUI de autenticación
+            appGUI.dispose();
             authGUI.clearFields();
             authGUI.setVisible(true);
             currentUser = null; // Limpiar el usuario actual

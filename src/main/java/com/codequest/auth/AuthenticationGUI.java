@@ -14,8 +14,6 @@ public class AuthenticationGUI extends JFrame {
     private JPasswordField passwordField;
     private JTextField birthdayField;
     private JLabel birthdayLabel;
-    private JTextField emailField;
-    private JLabel emailLabel;
     private JButton loginButton;
     private JButton registerButton;
     private JButton switchModeButton;
@@ -51,9 +49,6 @@ public class AuthenticationGUI extends JFrame {
 
         usernameField = new JTextField(20);
         passwordField = new JPasswordField(20);
-
-        emailLabel = new JLabel("Correo Electrónico:");
-        emailField = new JTextField(20);
 
         birthdayLabel = new JLabel("Fecha Nacimiento (DD/MM/YYYY):");
         birthdayField = new JTextField(20);
@@ -102,12 +97,6 @@ public class AuthenticationGUI extends JFrame {
 
         gbc.gridy++;
         mainPanel.add(passwordField, gbc);
-
-        gbc.gridy++;
-        mainPanel.add(emailLabel, gbc);
-
-        gbc.gridy++;
-        mainPanel.add(emailField, gbc);
 
         gbc.gridy++;
         mainPanel.add(birthdayLabel, gbc);
@@ -165,16 +154,15 @@ public class AuthenticationGUI extends JFrame {
         String username = usernameField.getText().trim();
         String password = new String(passwordField.getPassword());
         String birthdayStr = birthdayField.getText().trim();
-        String email = emailField.getText().trim();
 
-        if (username.isEmpty() || password.isEmpty() || birthdayStr.isEmpty() || email.isEmpty()) {
+        if (username.isEmpty() || password.isEmpty() || birthdayStr.isEmpty()) {
             showStatus("Por favor complete todos los campos", false);
             return;
         }
 
         try {
             Date birthday = parseBirthday(birthdayStr);
-            authService.createAccount(username, password, email, birthday);
+            authService.createAccount(username, password, birthday);
             showStatus("Cuenta creada exitosamente", true);
             setLoginMode();
         } catch (Exception ex) {
@@ -201,8 +189,6 @@ public class AuthenticationGUI extends JFrame {
         isLoginMode = true;
         birthdayField.setVisible(false);
         birthdayLabel.setVisible(false);
-        emailLabel.setVisible(false);
-        emailField.setVisible(false);
         loginButton.setVisible(true);
         registerButton.setVisible(false);
         switchModeButton.setText("¿No tienes cuenta? Regístrate");
@@ -213,8 +199,6 @@ public class AuthenticationGUI extends JFrame {
         isLoginMode = false;
         birthdayField.setVisible(true);
         birthdayLabel.setVisible(true);
-        emailLabel.setVisible(true);
-        emailField.setVisible(true);
         loginButton.setVisible(false);
         registerButton.setVisible(true);
         switchModeButton.setText("¿Ya tienes cuenta? Inicia sesión");
@@ -226,7 +210,6 @@ public class AuthenticationGUI extends JFrame {
         passwordField.setText("");
         birthdayField.setText("");
         statusLabel.setText(" ");
-        emailField.setText("");
     }
 
     private void showStatus(String message, boolean isSuccess) {

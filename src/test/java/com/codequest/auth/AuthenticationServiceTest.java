@@ -13,15 +13,14 @@ import static org.junit.jupiter.api.Assertions.*;
 public class AuthenticationServiceTest {
 
     private AuthenticationService authenticationService;
-    public static final String testUserFile = "src/test/resources/test-data/test-users.dat";
-
+    public static final String testUserFile = "/test-users.dat";
 
     @BeforeEach
     void setUp() {
         FileHandler<User> fileHandler = new FileHandler<User>(testUserFile);
         DataManager<User> dataManager = new DataManager<User>(fileHandler);
         if (dataManager.isEmpty()) {
-            dataManager.addData(new User("admin", "Admin123", "admin@test.com", new Date()));
+            dataManager.addData(new User("admin", "Admin12345", new Date()));
             dataManager.saveData(); 
         }
         authenticationService = new AuthenticationService(dataManager, fileHandler);
@@ -29,7 +28,7 @@ public class AuthenticationServiceTest {
 
     @Test
     public void testLoginWithValidCredentials() {
-        assertTrue(authenticationService.login("admin", "Admin123"), "Login should succeed with valid credentials");
+        assertTrue(authenticationService.login("admin", "Admin12345"), "Login should succeed with valid credentials");
     }
 
     @Test

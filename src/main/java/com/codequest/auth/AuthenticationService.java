@@ -42,8 +42,8 @@ public class AuthenticationService {
         return user.validatePassword(password);
     }
     
-    public void createAccount(String username, String password,String email, Date birthday) throws Exception {
-        validateUserData(username, password,email, birthday);
+    public void createAccount(String username, String password, Date birthday) throws Exception {
+        validateUserData(username, password, birthday);
 
         boolean existingUser = userController.existsById(username.hashCode());
         
@@ -51,23 +51,20 @@ public class AuthenticationService {
             throw new Exception("El usuario ya existe");
         }
         
-        User newUser = new User(username, password, email, birthday);
+        User newUser = new User(username, password, birthday);
         userController.addData(newUser);
         userFileHandler.save(userController.getData());
     }
     
-    private void validateUserData(String username, String password, String email, Date birthday) throws Exception {
+    private void validateUserData(String username, String password, Date birthday) throws Exception {
         if (username == null || username.trim().isEmpty()) {
             throw new Exception("Usuario no puede estar vacío");
         }
         if (userController.existsById(username.hashCode())) {
             throw new Exception("El nombre de usuario ya está en uso");
         }
-        if (password == null || password.length() <= 8) {
-            throw new Exception("Contraseña debe ser mayor a 8 caracteres");
-        }
-        if (email == null || !email.matches("^[\\w.-]+@[\\w.-]+\\.\\w+$")) {
-            throw new Exception("Email inválido");
+        if (password == null || password.length() < 8) {
+            throw new Exception("Contraseña debe ser mayor a 7 caracteres");
         }
         if (birthday == null) {
             throw new Exception("Fecha de nacimiento es requerida");

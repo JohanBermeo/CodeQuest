@@ -71,13 +71,75 @@ public class AppGUI extends JFrame {
         }
 
         // Pasarle los datos que el usuario ponga en todos los ActionsListeners para crear los challenges y quests
-        uploadChallengeButton.addActionListener(e -> app.uploadChallenge());
 
-        addSolutionButton.addActionListener(e -> {
-            app.addSolution();
+        uploadChallengeButton.addActionListener(e -> {
+            JTextField titleField = new JTextField();
+            JTextArea descArea = new JTextArea(5, 20);
+            JScrollPane scrollPane = new JScrollPane(descArea);
+            JPanel panel = new JPanel(new BorderLayout(5, 5));
+            panel.add(new JLabel("Título:"), BorderLayout.NORTH);
+            panel.add(titleField, BorderLayout.CENTER);
+            panel.add(new JLabel("Descripción:"), BorderLayout.SOUTH);
+            JPanel descPanel = new JPanel(new BorderLayout());
+            descPanel.add(scrollPane, BorderLayout.CENTER);
+            panel.add(descPanel, BorderLayout.AFTER_LAST_LINE);
+            int result = JOptionPane.showConfirmDialog(frame, panel, "Subir Reto", JOptionPane.OK_CANCEL_OPTION);
+            if (result == JOptionPane.OK_OPTION) {
+                String title = titleField.getText();
+                String desc = descArea.getText();
+                boolean success = app.uploadChallenge(title, desc);
+                JOptionPane.showMessageDialog(frame, success ? "Reto subido correctamente" : "Error al subir el reto");
+            }
         });
 
-        uploadQuestButton.addActionListener(e -> app.uploadQuest());
+
+        addSolutionButton.addActionListener(e -> {
+            // Obtener lista de retos para seleccionar
+            List<Challenge> challenges = app.showTopChallenges();
+            if (challenges.isEmpty()) {
+                JOptionPane.showMessageDialog(frame, "No hay retos disponibles");
+                return;
+            }
+            String[] challengeTitles = challenges.stream().map(Challenge::getTitle).toArray(String[]::new);
+            JComboBox<String> challengeBox = new JComboBox<>(challengeTitles);
+            JTextArea solutionArea = new JTextArea(5, 20);
+            JScrollPane scrollPane = new JScrollPane(solutionArea);
+            JPanel panel = new JPanel(new BorderLayout(5, 5));
+            panel.add(new JLabel("Selecciona un reto:"), BorderLayout.NORTH);
+            panel.add(challengeBox, BorderLayout.CENTER);
+            panel.add(new JLabel("Solución:"), BorderLayout.SOUTH);
+            JPanel solPanel = new JPanel(new BorderLayout());
+            solPanel.add(scrollPane, BorderLayout.CENTER);
+            panel.add(solPanel, BorderLayout.AFTER_LAST_LINE);
+            int result = JOptionPane.showConfirmDialog(frame, panel, "Agregar Solución", JOptionPane.OK_CANCEL_OPTION);
+            if (result == JOptionPane.OK_OPTION) {
+                int idx = challengeBox.getSelectedIndex();
+                String solutionText = solutionArea.getText();
+                boolean success = app.addSolution(challenges.get(idx), solutionText);
+                JOptionPane.showMessageDialog(frame, success ? "Solución agregada correctamente" : "Error al agregar solución");
+            }
+        });
+
+
+        uploadQuestButton.addActionListener(e -> {
+            JTextField titleField = new JTextField();
+            JTextArea descArea = new JTextArea(5, 20);
+            JScrollPane scrollPane = new JScrollPane(descArea);
+            JPanel panel = new JPanel(new BorderLayout(5, 5));
+            panel.add(new JLabel("Título:"), BorderLayout.NORTH);
+            panel.add(titleField, BorderLayout.CENTER);
+            panel.add(new JLabel("Descripción:"), BorderLayout.SOUTH);
+            JPanel descPanel = new JPanel(new BorderLayout());
+            descPanel.add(scrollPane, BorderLayout.CENTER);
+            panel.add(descPanel, BorderLayout.AFTER_LAST_LINE);
+            int result = JOptionPane.showConfirmDialog(frame, panel, "Subir Misión", JOptionPane.OK_CANCEL_OPTION);
+            if (result == JOptionPane.OK_OPTION) {
+                String title = titleField.getText();
+                String desc = descArea.getText();
+                boolean success = app.uploadQuest(title, desc);
+                JOptionPane.showMessageDialog(frame, success ? "Misión subida correctamente" : "Error al subir la misión");
+            }
+        });
 
         showTopChallengesButton.addActionListener(e -> {
             List<Challenge> challenges = app.showTopChallenges();

@@ -1,9 +1,15 @@
 package app;
+
 import model.content.Challenge;
 import model.content.Quest;
+import model.content.Solution;
+import model.content.ForumPost;
 import model.User;
+import ui.components.FileUploadDialog;
+import ui.utils.FileUploadUtils;
 import java.util.*;
-
+import java.io.IOException;
+import javax.swing.JFrame;
 
 public class App {
     private User usuario;
@@ -11,11 +17,19 @@ public class App {
     private FileHandlerSynchronous<Challenge> challengesDataHandler;
     private DataManager<Quest> questsController;
     private FileHandlerSynchronous<Quest> questsDataHandler;
+    private DataManager<Solution> solutionsController;
+    private FileHandlerSynchronous<Solution> solutionsDataHandler;
+    private DataManager<ForumPost> forumPostsController;
+    private FileHandlerSynchronous<ForumPost> forumPostsDataHandler;
+
     public App() {
-    	 this.challengesController = new DataManager<>();
-    	    this.questsController = new DataManager<>();
-    	    this.challengesDataHandler = new FileHandlerSynchronous<>("challenges.dat");
-    	    this.questsDataHandler = new FileHandlerSynchronous<>("quests.dat");
+        this.usuario = usuario;
+    	this.challengesController = new DataManager<>();
+    	this.questsController = new DataManager<>();
+        this.solutionsController = new DataManager<>();
+        this.forumPostsController = new DataManager<>();
+    	this.challengesDataHandler = new FileHandlerSynchronous<>("challenges.dat");
+    	this.questsDataHandler = new FileHandlerSynchronous<>("quests.dat");
     }
     
 

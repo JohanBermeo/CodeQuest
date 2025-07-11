@@ -17,6 +17,7 @@ public class QuestFileHandler {
         LockManager lockManager = new LockManager(file); 
 
         try {
+            // AQUI ERROR
             lockManager.acquireLock();
 
             try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file))) {

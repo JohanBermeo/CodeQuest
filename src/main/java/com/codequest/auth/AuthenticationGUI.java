@@ -43,7 +43,7 @@ public class AuthenticationGUI extends JFrame {
     private void initializeComponents() {
         setTitle("CodeQuest - Autenticación");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(420, 500);
+        setSize(420, 450);
         setLocationRelativeTo(null);
         setResizable(false);
 

@@ -18,21 +18,6 @@ public class DataManager<T extends Identifiable & java.io.Serializable> {
         this.data = loadData();
     }
 
-
-    public DataManager(String filePath) {
-        // Si el archivo .dat existe, usarlo; si no, crearlo vacío
-        File file = new File(filePath);
-        this.fileHandler = new FileHandler<>(filePath);
-        if (!file.exists()) {
-            try {
-                file.createNewFile();
-            } catch (Exception e) {
-                System.err.println("No se pudo crear el archivo: " + e.getMessage());
-            }
-        }
-        this.data = loadData();
-    }
-
     public DataManager() {
         this.fileHandler = null;
         this.data = new ArrayList<>();

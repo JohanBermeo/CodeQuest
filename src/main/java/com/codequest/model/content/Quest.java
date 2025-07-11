@@ -33,4 +33,8 @@ public class Quest implements Identifiable, Serializable {
    public String getAuthor() {
       return author;
    }
+
+   public static void setIdCounter(int idCounter) {
+      Quest.idCounter = idCounter;
+   }
 }

@@ -60,4 +60,8 @@ public class Challenge implements Identifiable, Serializable {
       }
       solutionsIds.add(solutionId);
    }
+
+   public static void setIdCounter(int idCounter) {
+      Challenge.idCounter = idCounter;
+   }
 }

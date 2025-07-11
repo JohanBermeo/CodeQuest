@@ -53,6 +53,7 @@ public class AuthenticationService {
         
         User newUser = new User(username, password, birthday);
         userController.addData(newUser);
+        userController.saveData();
         userFileHandler.save(userController.getData());
     }
     

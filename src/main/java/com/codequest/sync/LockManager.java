@@ -8,7 +8,6 @@ public class LockManager {
 
     private final File lockFile;
 
- 
     public LockManager(File targetFile) {
         File parentDir = new File(System.getProperty("user.home"), "compartida/CodeQuest");
         String lockFileName = targetFile.getName() + ".lock";
@@ -22,19 +21,25 @@ public class LockManager {
     public void acquireLock() throws IOException {
         int attempts = 0;
         while (lockFile.exists()) {
+            System.out.println("Intentando adquirir el lock para el archivo: " + lockFile.getAbsolutePath());
             try {
                 Thread.sleep(100); // Esperar un poco antes de intentar de nuevo
                 attempts++;
                 if (attempts > 100) { // Esperar hasta 10 segundos máximo
+                    System.err.println("No se pudo adquirir el lock después de 10 segundos.");
                     throw new IllegalStateException("El archivo está bloqueado por otra instancia: " + lockFile.getName());
                 }
             } catch (InterruptedException e) {
+                System.err.println("Interrupción al intentar adquirir el lock: " + e.getMessage());
                 Thread.currentThread().interrupt();
                 throw new IOException("Interrumpido mientras esperaba el lock", e);
             }
         }
 
+        System.out.println("Lock adquirido para el archivo: " + lockFile.getAbsolutePath());
+
         if (!lockFile.createNewFile()) {
+            System.err.println("No se pudo crear el archivo de lock: " + lockFile.getAbsolutePath());
             throw new IOException("No se pudo crear el archivo de lock: " + lockFile.getAbsolutePath());
         }
     }

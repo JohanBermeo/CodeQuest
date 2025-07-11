@@ -20,6 +20,7 @@ public class AppGUI extends JFrame {
     private App app; 
     private Consumer<Boolean> onExitCallback;
     private JPanel mainPanel; 
+    private JFrame frame;
 
     public AppGUI(User user, App app, Consumer<Boolean> onExitCallback) {
         this.user = user;
@@ -29,7 +30,7 @@ public class AppGUI extends JFrame {
     }
 
     public void initializeComponents() {
-        JFrame frame = new JFrame("CodeQuest");
+        frame = new JFrame("CodeQuest");
         frame.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
@@ -63,14 +64,14 @@ public class AppGUI extends JFrame {
 
         // Panel de Challenges
         Object[] itemsChallenges = createChallengesPanel(new ArrayList<>());
-        JPanel challengesPanel = (JPanel) itemsChallenges[0];
         JButton createChallengeButton = (JButton) itemsChallenges[1];
-        JButton createSolutionButton = (JButton) itemsChallenges[2];
 
         // Acción para "Foro"
         foroButton.addActionListener(e -> {
+            Object[] itemsForo2 = createForoPanel(new ArrayList<>());
+            JPanel foroPanel2 = (JPanel) itemsForo2[0];
             mainPanel.removeAll();
-            mainPanel.add(foroPanel, BorderLayout.CENTER);
+            mainPanel.add(foroPanel2, BorderLayout.CENTER);
             mainPanel.revalidate();
             mainPanel.repaint();
 
@@ -83,14 +84,15 @@ public class AppGUI extends JFrame {
 
         // Acción para "Challenges"
         challengesButton.addActionListener(e -> {
+            Object[] itemsChallenges2 = createChallengesPanel(new ArrayList<>());
+            JPanel challengesPanel2 = (JPanel) itemsChallenges2[0];
             mainPanel.removeAll();
-            mainPanel.add(challengesPanel, BorderLayout.CENTER);
+            mainPanel.add(challengesPanel2, BorderLayout.CENTER);
             mainPanel.revalidate();
             mainPanel.repaint();
 
             // Actualizar botones del panel inferior
             bottomPanel.removeAll();
-            bottomPanel.add(createSolutionButton);
             bottomPanel.add(createChallengeButton);
             bottomPanel.revalidate();
             bottomPanel.repaint();
@@ -169,53 +171,42 @@ public class AppGUI extends JFrame {
         foroPanel.add(tituloLabel);
         foroPanel.add(Box.createRigidArea(new Dimension(0, 20)));
 
-        List<Quest> quests = new ArrayList<>();
-        quests.add(new Quest("Aventura en la Montaña", "Explora la montaña y encuentra el tesoro perdido.", "Juan"));
-        quests.add(new Quest("Resuelve el Laberinto", "Encuentra la salida del laberinto en menos de 5 minutos.", "Ana"));
-        quests.add(new Quest("Desafío de Programación", "Resuelve el problema de algoritmos más rápido que tus compañeros.", "Carlos"));
-        quests.add(new Quest("Búsqueda del Dragón", "Derrota al dragón y salva el reino.", "Lucía"));
-        quests.add(new Quest("Puzzle Matemático", "Resuelve el puzzle matemático usando lógica.", "Pedro"));
-        quests.add(new Quest("Carrera de Obstáculos", "Supera todos los obstáculos en el menor tiempo posible.", "María"));
-        quests.add(new Quest("Misión Espacial", "Llega a Marte y regresa a salvo.", "Sofía"));
-        quests.add(new Quest("Escape de la Isla", "Encuentra la manera de escapar de la isla desierta.", "Miguel"));
-        quests.add(new Quest("Construye un Puente", "Construye un puente resistente usando materiales limitados.", "Elena"));
-        quests.add(new Quest("Rescate Submarino", "Rescata a los buzos atrapados bajo el mar.", "Andrés"));
+        List<Quest> quests = app.showQuests();
 
         if (quests == null || quests.isEmpty()) {
             foroPanel.add(new JLabel("No hay quests para mostrar."));
         } else {
             for (Quest quest : quests) {
-            JPanel questPanel = new JPanel();
-            questPanel.setLayout(new BorderLayout());
-            questPanel.setBackground(new Color(236, 240, 241));
-            questPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+                JPanel questPanel = new JPanel();
+                questPanel.setLayout(new BorderLayout());
+                questPanel.setBackground(new Color(236, 240, 241));
+                questPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-            Dimension fixedSize = new Dimension(700, 105);
-            questPanel.setMaximumSize(fixedSize);
-            questPanel.setPreferredSize(fixedSize);
-            questPanel.setMinimumSize(fixedSize);
+                Dimension fixedSize = new Dimension(700, 105);
+                questPanel.setMaximumSize(fixedSize);
+                questPanel.setPreferredSize(fixedSize);
+                questPanel.setMinimumSize(fixedSize);
 
-            // Panel central para la info del quest
-            JPanel infoPanel = new JPanel();
-            infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
-            infoPanel.setOpaque(false);
-            infoPanel.add(new JLabel("Id: " + quest.getId()));
-            infoPanel.add(new JLabel("Título: " + quest.getTitle()));
-            infoPanel.add(new JLabel("Descripción: " + quest.getDescription()));
-            infoPanel.add(new JLabel("Autor: " + quest.getAuthor()));
+                // Panel central para la info del quest
+                JPanel infoPanel = new JPanel();
+                infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
+                infoPanel.setOpaque(false);
+                infoPanel.add(new JLabel("Título: " + quest.getTitle()));
+                infoPanel.add(new JLabel("Descripción: " + quest.getDescription()));
+                infoPanel.add(new JLabel("Autor: " + quest.getAuthor()));
 
-            questPanel.add(infoPanel, BorderLayout.CENTER);
+                questPanel.add(infoPanel, BorderLayout.CENTER);
 
-            JButton likeButton = createLikeBtn(quest.getId(), user::getQuestsLikedIds,
-                user::addQuestLikedId, user::removeQuestLikedId);
+                JButton likeButton = createLikeBtn(quest.getId(), user::getQuestsLikedIds,
+                    user::addQuestLikedId, user::removeQuestLikedId);
 
-            JPanel rightBtnPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 0));
-            rightBtnPanel.add(likeButton);
+                JPanel rightBtnPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 0));
+                rightBtnPanel.add(likeButton);
 
-            questPanel.add(rightBtnPanel, BorderLayout.SOUTH);
-            questPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
-            foroPanel.add(questPanel);
-            foroPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+                questPanel.add(rightBtnPanel, BorderLayout.SOUTH);
+                questPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+                foroPanel.add(questPanel);
+                foroPanel.add(Box.createRigidArea(new Dimension(0, 10)));
             }
         }
 
@@ -239,17 +230,26 @@ public class AppGUI extends JFrame {
         crearQuestButton.setBorder(BorderFactory.createEmptyBorder(10, 30, 10, 30));
         crearQuestButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         crearQuestButton.addActionListener(e -> {
+            frame.dispose(); // Ocultar la ventana actual
             FileUploadDialog dialog = new FileUploadDialog(
                 null, "Subir Quest", "FORUMPOST", (FileUploadDialog.UploadData uploadData) -> {
                     boolean ok = app.uploadQuest(uploadData.getTitle(), uploadData.getContent());
                     if (ok) {
-                        JOptionPane.showMessageDialog(null, "Challenge subido exitosamente.");
+                        JOptionPane.showMessageDialog(null, "Quest subido exitosamente.");
                     } else {
-                        JOptionPane.showMessageDialog(null, "Error al subir el challenge.", "Error", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "Error al subir el quest.", "Error", JOptionPane.ERROR_MESSAGE);
                     }
                 }
             );
             dialog.setVisible(true);
+            // Actualizar el panel de foro
+            mainPanel.removeAll();
+            Object[] items = createForoPanel(app.showQuests());
+            JPanel foroPanel2 = (JPanel) items[0];
+            mainPanel.add(foroPanel2, BorderLayout.CENTER);
+            mainPanel.revalidate();
+            mainPanel.repaint();
+            frame.setVisible(true); // Volver a mostrar la ventana principal
         });
 
         return new Object[] { containerPanel, crearQuestButton };
@@ -272,85 +272,45 @@ public class AppGUI extends JFrame {
         challengesPanel.add(Box.createRigidArea(new Dimension(0, 20)));
 
         // Lista de challenges de ejemplo si la lista está vacía
-        List<Challenge> challenges = (challengesList == null || challengesList.isEmpty()) ? new ArrayList<>() : challengesList;
-        if (challenges.isEmpty()) {
-            challenges.add(new Challenge("Suma de Números", "Escribe una función que sume dos números.", "Juan"));
-            challenges.add(new Challenge("Palíndromo", "Verifica si una palabra es un palíndromo.", "Ana"));
-            challenges.add(new Challenge("Ordenar Lista", "Ordena una lista de enteros de menor a mayor.", "Carlos"));
-            challenges.add(new Challenge("Contar Vocales", "Cuenta el número de vocales en una cadena.", "Lucía"));
-            challenges.add(new Challenge("Fibonacci", "Calcula el n-ésimo número de Fibonacci.", "Pedro"));
-            challenges.add(new Challenge("Factorial", "Calcula el factorial de un número.", "María"));
-            challenges.add(new Challenge("Invertir Cadena", "Invierte una cadena de texto.", "Sofía"));
-            challenges.add(new Challenge("Buscar Elemento", "Busca un elemento en un arreglo.", "Miguel"));
-            challenges.add(new Challenge("Máximo Común Divisor", "Encuentra el MCD de dos números.", "Elena"));
-            challenges.add(new Challenge("Números Primos", "Determina si un número es primo.", "Andrés"));
-        }
+        List<Challenge> challenges = app.showChallenges();
 
-        // Crear soluciones de ejemplo y asignarlas a algunos challenges
-        List<Solution> allSolutions = new ArrayList<>();
-        allSolutions.add(new Solution("Luis", "Usé un bucle for para sumar los números.", challenges.get(0).getId()));
-        allSolutions.add(new Solution("Ana", "Utilicé recursividad para sumar.", challenges.get(0).getId()));
-        allSolutions.add(new Solution("Pedro", "Invertí la cadena con StringBuilder.", challenges.get(6).getId()));
-        allSolutions.add(new Solution("Lucía", "Verifiqué palíndromos con dos punteros.", challenges.get(1).getId()));
-        allSolutions.add(new Solution("Carlos", "Usé el algoritmo de Euclides para el MCD.", challenges.get(8).getId()));
+        if (challenges.isEmpty() || challenges == null) {
+            challengesPanel.add(new JLabel("No hay retos para mostrar."));
+        } else {
+            for (Challenge challenge : challenges) {
 
-        // Asignar soluciones a los challenges correspondientes
-        for (Solution sol : allSolutions) {
-            for (Challenge ch : challenges) {
-            if (ch.getId() == sol.getChallengeId()) {
-                    ch.addSolution(sol.getId());
+                JPanel challengePanel = new JPanel();
+                challengePanel.setLayout(new BorderLayout());
+                challengePanel.setBackground(new Color(236, 240, 241));
+                challengePanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 0));
+
+                Dimension fixedSize = new Dimension(700, 105);
+                challengePanel.setMaximumSize(fixedSize);
+                challengePanel.setPreferredSize(fixedSize);
+                challengePanel.setMinimumSize(fixedSize);
+
+                // Panel central para la info del challenge
+                JPanel infoPanel = new JPanel();
+                infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
+                infoPanel.setOpaque(false);
+                infoPanel.add(new JLabel("Título: " + challenge.getTitle()));
+                infoPanel.add(new JLabel("Descripción: " + challenge.getDescription()));
+                infoPanel.add(new JLabel("Autor: " + challenge.getAuthor()));
+
+                challengePanel.add(infoPanel, BorderLayout.CENTER);
+
+                JButton likeButton = createLikeBtn(challenge.getId(), user::getChallengesLikedIds,
+                user::addChallengeLikedId, user::removeChallengeLikedId);
+
+                JPanel rightBtnPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 0));
+
+                rightBtnPanel.add(likeButton);
+                
+                challengePanel.add(rightBtnPanel, BorderLayout.SOUTH);
+                challengePanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+                challengesPanel.add(challengePanel);
+                challengesPanel.add(Box.createRigidArea(new Dimension(0, 10)));
             }
-            }
-        }
-
-        for (Challenge challenge : challenges) {
-            JPanel challengePanel = new JPanel();
-            challengePanel.setLayout(new BorderLayout());
-            challengePanel.setBackground(new Color(236, 240, 241));
-            challengePanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 0));
-
-            Dimension fixedSize = new Dimension(700, 105);
-            challengePanel.setMaximumSize(fixedSize);
-            challengePanel.setPreferredSize(fixedSize);
-            challengePanel.setMinimumSize(fixedSize);
-
-            // Panel central para la info del challenge
-            JPanel infoPanel = new JPanel();
-            infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
-            infoPanel.setOpaque(false);
-            infoPanel.add(new JLabel("Id: " + challenge.getId()));
-            infoPanel.add(new JLabel("Título: " + challenge.getTitle()));
-            infoPanel.add(new JLabel("Descripción: " + challenge.getDescription()));
-            infoPanel.add(new JLabel("Autor: " + challenge.getAuthor()));
-
-            challengePanel.add(infoPanel, BorderLayout.CENTER);
-
-            JButton likeButton = createLikeBtn(challenge.getId(), user::getChallengesLikedIds,
-            user::addChallengeLikedId, user::removeChallengeLikedId);
-
-            JPanel rightBtnPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 0));
-
-            // Si el challenge tiene soluciones
-            if (!challenge.getSolutions().isEmpty()) {
-            Solution[] solutionsArray = new Solution[challenge.getSolutions().size()];
-            for (Solution sol : allSolutions) {
-                if (sol.getChallengeId() == challenge.getId()) {
-                    int index = challenge.getSolutions().indexOf(sol.getId());
-                    if (index >= 0) {
-                        solutionsArray[index] = sol;
-                    }
-                }
-            }
-            JButton verSolucionesBtn = createSolutionBtn(solutionsArray, challenge.getTitle());
-            rightBtnPanel.add(verSolucionesBtn);
-            }
-            
-            rightBtnPanel.add(likeButton);
-            
-            challengePanel.add(rightBtnPanel, BorderLayout.SOUTH);
-            challengePanel.setAlignmentX(Component.CENTER_ALIGNMENT);
-            challengesPanel.add(challengePanel);
-            challengesPanel.add(Box.createRigidArea(new Dimension(0, 10)));
         }
 
         // Agregar challengesPanel a un JScrollPane para permitir scroll
@@ -373,18 +333,7 @@ public class AppGUI extends JFrame {
         createChallengeButton.setBorder(BorderFactory.createEmptyBorder(10, 30, 10, 30));
         createChallengeButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         createChallengeButton.addActionListener(e -> {
-            JOptionPane.showMessageDialog(containerPanel, "Acción para los challenges");
-        });
-
-        // Botón contextual para challenges
-        JButton createSolutionButton = new JButton("Subir Solución");
-        createSolutionButton.setBackground(new Color(200, 100, 0));
-        createSolutionButton.setForeground(Color.WHITE);
-        createSolutionButton.setFocusPainted(false);
-        createSolutionButton.setFont(new Font("SansSerif", Font.BOLD, 16));
-        createSolutionButton.setBorder(BorderFactory.createEmptyBorder(10, 30, 10, 30));
-        createSolutionButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        createSolutionButton.addActionListener(e -> {
+            frame.dispose(); // Ocultar la ventana actual
             FileUploadDialog dialog = new FileUploadDialog(
                 null, "Subir Challenge", "CHALLENGE", (FileUploadDialog.UploadData uploadData) -> {
                     boolean ok = app.uploadChallenge(uploadData.getTitle(), uploadData.getContent());
@@ -396,52 +345,17 @@ public class AppGUI extends JFrame {
                 }
             );
             dialog.setVisible(true);
+            // Actualizar el panel de foro
+            mainPanel.removeAll();
+            Object[] items = createChallengesPanel(app.showChallenges());
+            JPanel challengePanel2 = (JPanel) items[0];
+            mainPanel.add(challengePanel2, BorderLayout.CENTER);
+            mainPanel.revalidate();
+            mainPanel.repaint();
+            frame.setVisible(true); // Volver a mostrar la ventana principal
         });
 
-        return new Object[] { containerPanel, createChallengeButton, createSolutionButton };
-    }
-
-    private JButton createSolutionBtn(Solution[] solutionsArray, String challengeTitle) {
-        JButton verSolucionesBtn = new JButton("Ver soluciones");
-        verSolucionesBtn.setBackground(new Color(200, 100, 0));
-        verSolucionesBtn.setForeground(Color.WHITE);
-        verSolucionesBtn.setFocusPainted(false);
-        verSolucionesBtn.setFont(new Font("SansSerif", Font.BOLD, 14));
-        verSolucionesBtn.setBorder(BorderFactory.createEmptyBorder(6, 18, 6, 18));
-        verSolucionesBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-
-        verSolucionesBtn.addActionListener(e -> {
-            // Crear panel para mostrar soluciones de este challenge
-            JPanel solucionesPanel = new JPanel();
-            solucionesPanel.setLayout(new BoxLayout(solucionesPanel, BoxLayout.Y_AXIS));
-            solucionesPanel.setBackground(new Color(236, 240, 241));
-            solucionesPanel.add(new JLabel("Soluciones para el challenge: " + challengeTitle));
-            solucionesPanel.add(Box.createRigidArea(new Dimension(0, 10)));
-
-            Dimension fixedSolSize = new Dimension(395, 70);
-
-            for (Solution sol : solutionsArray) {
-            JPanel solPanel = new JPanel();
-            solPanel.setLayout(new BoxLayout(solPanel, BoxLayout.Y_AXIS));
-            solPanel.setBackground(new Color(220, 220, 220));
-            solPanel.setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 8));
-            solPanel.setMaximumSize(fixedSolSize);
-            solPanel.setPreferredSize(fixedSolSize);
-            solPanel.setMinimumSize(fixedSolSize);
-
-            solPanel.add(new JLabel("Autor: " + sol.getAuthor()));
-            solPanel.add(new JLabel("Explicación: " + sol.getExplication()));
-            solucionesPanel.add(solPanel);
-            solucionesPanel.add(Box.createRigidArea(new Dimension(0, 8)));
-            }
-
-            // Mostrar soluciones en un JOptionPane
-            JScrollPane scrollSol = new JScrollPane(solucionesPanel);
-            scrollSol.setPreferredSize(new Dimension(400, 250));
-            JOptionPane.showMessageDialog(null, scrollSol, "Soluciones", JOptionPane.INFORMATION_MESSAGE);
-        });
-
-        return verSolucionesBtn;
+        return new Object[] { containerPanel, createChallengeButton };
     }
 
     private JButton createLikeBtn(int postId, Supplier<Set<Integer>> getlikedIds, Consumer<Integer> addLikedId, Consumer<Integer> removeLikedId) {

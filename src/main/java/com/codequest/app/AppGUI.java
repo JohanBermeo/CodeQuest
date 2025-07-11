@@ -10,6 +10,8 @@ import com.codequest.app.App;
 import com.codequest.model.User;
 import com.codequest.model.content.Quest;
 import com.codequest.model.content.Challenge;
+import com.codequest.ui.components.FileUploadDialog;
+
 
 public class AppGUI extends JFrame {
     private User user;
@@ -64,32 +66,34 @@ public class AppGUI extends JFrame {
         JButton createSolutionButton = (JButton) itemsChallenges[2];
 
         // Acción para "Foro"
-        foroButton.addActionListener(e -> {
-            mainPanel.removeAll();
-            mainPanel.add(foroPanel, BorderLayout.CENTER);
-            mainPanel.revalidate();
-            mainPanel.repaint();
-
-            // Actualizar botones del panel inferior
-            bottomPanel.removeAll();
-            bottomPanel.add(createQuestButton);
-            bottomPanel.revalidate();
-            bottomPanel.repaint();
+        createQuestButton.addActionListener(e ->{
+            FileUploadDialog dialog = new FileUploadDialog(
+                frame, "Subir Quest", "FORUMPOST", (FileUploadDialog.UploadData uploadData) -> {
+                    boolean ok = app.uploadQuest(uploadData.getTitle(), uploadData.getContent());
+                    if (ok) {
+                        JOptionPane.showMessageDialog(frame, "Challenge subido exitosamente.");
+                    } else {
+                        JOptionPane.showMessageDialog(frame, "Error al subir el challenge.", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            );
+            dialog.setVisible(true);
         });
 
-        // Acción para "Challenges"
-        challengesButton.addActionListener(e -> {
-            mainPanel.removeAll();
-            mainPanel.add(challengesPanel, BorderLayout.CENTER);
-            mainPanel.revalidate();
-            mainPanel.repaint();
 
-            // Actualizar botones del panel inferior
-            bottomPanel.removeAll();
-            bottomPanel.add(createSolutionButton);
-            bottomPanel.add(createChallengeButton);
-            bottomPanel.revalidate();
-            bottomPanel.repaint();
+        // Acción para "Challenges"
+        createChallengeButton.addActionListener(e -> {
+            FileUploadDialog dialog = new FileUploadDialog(
+                frame, "Subir Challenge", "CHALLENGE", (FileUploadDialog.UploadData uploadData) -> {
+                    boolean ok = app.uploadChallenge(uploadData.getTitle(), uploadData.getContent());
+                    if (ok) {
+                        JOptionPane.showMessageDialog(frame, "Challenge subido exitosamente.");
+                    } else {
+                        JOptionPane.showMessageDialog(frame, "Error al subir el challenge.", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            );
+            dialog.setVisible(true);
         });
 
         // Por defecto, mostrar el panel de foro y su botón contextual

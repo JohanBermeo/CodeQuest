@@ -31,7 +31,7 @@ public class AuthenticationService {
         if (username == null || username.trim().isEmpty()) {
             return false;
         }
-        if (password == null || password.length() < 8) {
+        if (password == null || password.length() <= 8) {
             return false;
         }
         User user = userController.findDataById(username.hashCode());
@@ -63,8 +63,8 @@ public class AuthenticationService {
         if (userController.existsById(username.hashCode())) {
             throw new Exception("El nombre de usuario ya está en uso");
         }
-        if (password == null || password.length() < 8) {
-            throw new Exception("Contraseña debe ser mayor a 7 caracteres");
+        if (password == null || password.length() <= 8) {
+            throw new Exception("Contraseña debe ser mayor a 8 caracteres");
         }
         if (birthday == null) {
             throw new Exception("Fecha de nacimiento es requerida");

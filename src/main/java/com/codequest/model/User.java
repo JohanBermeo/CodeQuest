@@ -38,7 +38,7 @@ public class User implements Identifiable, Serializable {
     // Getters
     @Override
     public int getId() {
-        return username.hashCode();
+        return id;
     }
 
     public boolean idEquals(int id) {

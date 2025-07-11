@@ -315,13 +315,13 @@ public class FileUploadDialog extends JDialog {
         return isSubmitted;
     }
 
+    // Clase interna para datos de subida
     public static class UploadData {
         private final String title;
         private final String content;
         private final String category;
         private final String type;
         private final List<File> files;
-        
         public UploadData(String title, String content, String category, String type, List<File> files) {
             this.title = title;
             this.content = content;
@@ -329,8 +329,6 @@ public class FileUploadDialog extends JDialog {
             this.type = type;
             this.files = files;
         }
-        
-        // Getters
         public String getTitle() { return title; }
         public String getContent() { return content; }
         public String getCategory() { return category; }

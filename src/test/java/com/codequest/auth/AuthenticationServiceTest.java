@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class AuthenticationServiceTest {
 
     private AuthenticationService authenticationService;
-    public static final String testUserFile = "/test-users.dat";
+    public static final String testUserFile = "src/test/resources/test-data/test-users.dat";
 
     @BeforeEach
     void setUp() {

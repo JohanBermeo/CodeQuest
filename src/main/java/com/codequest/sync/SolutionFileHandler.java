@@ -10,7 +10,7 @@ import java.util.List;
 import com.codequest.model.content.Solution;
 
 public class SolutionFileHandler {
-    private static final String PATH = "Documentos/compartida/solutions.dat";
+    private static final String PATH = "compartida/CodeQuest/solutions.dat";
 
     public static void saveSolutions(List<Solution> solutions) throws Exception {
         File file = new File(PATH);

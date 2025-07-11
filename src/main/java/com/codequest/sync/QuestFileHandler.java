@@ -10,7 +10,7 @@ import java.util.List;
 import com.codequest.model.content.Quest;
 
 public class QuestFileHandler {
-    private static final String PATH = "Documentos/compartida/quests.dat";
+    private static final String PATH = "compartida/CodeQuest/quests.dat";
 
     public static void saveQuests(List<Quest> quests) throws Exception {
         File file = new File(PATH);

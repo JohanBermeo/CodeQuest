@@ -1,21 +1,28 @@
 package com.codequest.sync;
 
-import com.codequest.model.content.Challenge;
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.List;
+
+import com.codequest.model.content.Challenge;
 
 public class ChallengeFileHandler {
     private static final String PATH = "Documentos/compartida/challenges.dat";
 
     public static void saveChallenges(List<Challenge> challenges) throws Exception {
-        if (!LockManager.acquireLock(PATH)) {
-            throw new Exception("Otro usuario está editando los challenges.");
-        }
+        File file = new File(PATH);
+        LockManager lockManager = new LockManager(file); 
+        try {
+            lockManager.acquireLock(); 
 
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(PATH))) {
-            oos.writeObject(challenges);
+            try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file))) {
+                oos.writeObject(challenges);
+            }
         } finally {
-            LockManager.releaseLock(PATH);
+            lockManager.releaseLock(); 
         }
     }
 

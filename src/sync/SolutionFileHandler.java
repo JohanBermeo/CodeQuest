@@ -1,21 +1,28 @@
-package sync;
+package com.codequest.sync;
 
-import model.content.Solution;
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.List;
+
+import com.codequest.model.content.Solution;
 
 public class SolutionFileHandler {
     private static final String PATH = "Documentos/compartida/solutions.dat";
 
     public static void saveSolutions(List<Solution> solutions) throws Exception {
-        if (!LockManager.acquireLock(PATH)) {
-            throw new Exception("Otro usuario está editando las soluciones.");
-        }
+        File file = new File(PATH);
+        LockManager lockManager = new LockManager(file); 
 
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(PATH))) {
-            oos.writeObject(solutions);
+        try {
+            lockManager.acquireLock(); 
+            try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file))) {
+                oos.writeObject(solutions);
+            }
         } finally {
-            LockManager.releaseLock(PATH);
+            lockManager.releaseLock(); 
         }
     }
 

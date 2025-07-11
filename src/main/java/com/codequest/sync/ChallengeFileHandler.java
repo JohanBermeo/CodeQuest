@@ -10,7 +10,7 @@ import java.util.List;
 import com.codequest.model.content.Challenge;
 
 public class ChallengeFileHandler {
-    private static final String PATH = "Documentos/compartida/challenges.dat";
+    private static final String PATH = "compartida/CodeQuest/challenges.dat";
 
     public static void saveChallenges(List<Challenge> challenges) throws Exception {
         File file = new File(PATH);

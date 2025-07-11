@@ -198,7 +198,7 @@ Este proyecto está licenciado bajo la Licencia MIT - ver el archivo [LICENSE](L
 - **Curso**: Programación Orientada a Objetos
 - **Profesor**: Sergio A. Rojas
 - **Institución**: Universidad Distrital Francisco José de Caldas
-- **Semestre**: 2024
+- **Semestre**: 2025-1
 
 ---
 

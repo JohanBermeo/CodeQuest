@@ -1,6 +1,6 @@
-package model.content;
+package  model.content;
 
-import model.interfaces.Publication;
+import  model.interfaces.Publication;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;

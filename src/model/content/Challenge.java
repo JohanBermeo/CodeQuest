@@ -1,10 +1,10 @@
-package model.content;
+package  model.content;
 
 import java.util.List;
 import java.util.ArrayList;
 import java.io.Serializable;
 
-import model.interfaces.Identifiable;
+import  model.interfaces.Identifiable;
 
 public class Challenge implements Identifiable, Serializable {
    private static int idCounter = 1;

@@ -1,4 +1,4 @@
-package model.interfaces;
+package  model.interfaces;
 
 import java.io.Serializable;
 import java.util.Date;

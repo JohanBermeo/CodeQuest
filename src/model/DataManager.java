@@ -1,10 +1,10 @@
-package model;
+package  model;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.io.File;
-import model.interfaces.Identifiable;
+import  model.interfaces.Identifiable;
 
 /**
  * Manejador genérico de datos

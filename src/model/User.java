@@ -1,8 +1,10 @@
-package model;
+package  model;
 
-import java.io.Serializable; 
-import model.interfaces.Identifiable;
 import java.util.Date;
+import java.util.Set;
+import java.util.HashSet;
+import java.io.Serializable; 
+import  model.interfaces.Identifiable;
 
 /**
  * Clase User mejorada
@@ -14,6 +16,8 @@ public class User implements Identifiable, Serializable {
     private String username;
     private String passwordHash;
     private Date birthday;
+    private Set<Integer> challengesLikedIds = new HashSet<>();
+    private Set<Integer> questsLikedIds = new HashSet<>();
 
     private Date dateCreated;
     
@@ -57,8 +61,27 @@ public class User implements Identifiable, Serializable {
         return new Date(dateCreated.getTime());
     }
     
-    @Override
-    public int hashCode() {
-        return Integer.hashCode(id);
-    }
+    public Set<Integer> getChallengesLikedIds() {
+      return new HashSet<>(challengesLikedIds);
+   }
+
+   public Set<Integer> getQuestsLikedIds() {
+      return new HashSet<>(questsLikedIds); 
+   }
+
+   public void addChallengeLikedId(int challengeId) {
+      challengesLikedIds.add(challengeId);
+   }
+
+   public void removeChallengeLikedId(int challengeId) {
+      challengesLikedIds.remove(challengeId);
+   }
+
+   public void addQuestLikedId(int solutionId) {
+      questsLikedIds.add(solutionId);
+   }
+
+   public void removeQuestLikedId(int solutionId) {
+      questsLikedIds.remove(solutionId);
+   }
 }

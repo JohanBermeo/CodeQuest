@@ -1,16 +1,16 @@
-package app;
+package  app;
 
 import java.util.List;
 
-import model.DataManager;
-import model.FileHandlerSynchronous;
-import model.content.Challenge;
-import model.content.Quest;
-import model.content.Solution;
-import model.content.ForumPost;
-import model.User;
-import ui.utils.FileUploadUtils;
-import ui.components.FileUploadDialog;
+import  model.DataManager;
+import  model.FileHandlerSynchronous;
+import  model.content.Challenge;
+import  model.content.Quest;
+import  model.content.Solution;
+import  model.content.ForumPost;
+import  model.User;
+import  ui.utils.FileUploadUtils;
+import  ui.components.FileUploadDialog;
 
 public class App {
     private User usuario;

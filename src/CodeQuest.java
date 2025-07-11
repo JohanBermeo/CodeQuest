@@ -1,11 +1,11 @@
 import javax.swing.*;
 
-import auth.*;
-import model.FileHandler;
-import model.DataManager;
-import model.User;
-import app.App;
-import app.AppGUI;
+import  auth.*;
+import  model.FileHandler;
+import  model.DataManager;
+import  model.User;
+import  app.App;
+import  app.AppGUI;
 
 /**
  * Clase principal para ejecutar la aplicación CodeQuest
@@ -53,7 +53,11 @@ public class CodeQuest {
             app = new App(currentUser); 
             appGUI = new AppGUI(currentUser, app, (Boolean isChangeUser) -> callbackMenu(true));
             appGUI.setVisible(true);
-        } 
+        } else {
+            userController.deleteData(currentUser.getId());
+	        userController.addData(currentUser);
+	        userController.saveData();
+	    }
     }
 
     private void callbackMenu(boolean isChangeUser) {

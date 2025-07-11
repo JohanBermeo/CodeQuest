@@ -1,11 +1,11 @@
-package auth;
+package  auth;
 
 import java.util.Date;
 import java.util.ArrayList;
 
-import model.DataManager;
-import model.FileHandler;
-import model.User;
+import  model.DataManager;
+import  model.FileHandler;
+import  model.User;
 
 /**
  * Separación de responsabilidades - Autenticación

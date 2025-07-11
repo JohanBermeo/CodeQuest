@@ -1,8 +1,8 @@
-package model.content;
+package  model.content;
 
 import java.io.Serializable;
 
-import model.interfaces.Identifiable;
+import  model.interfaces.Identifiable;
 
 public class Solution implements Identifiable, Serializable {
    private static int idCounter = 1;

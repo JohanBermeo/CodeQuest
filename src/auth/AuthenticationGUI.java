@@ -1,4 +1,4 @@
-package auth;
+package  auth;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;

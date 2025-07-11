@@ -29,7 +29,7 @@ public class CodeQuest {
      */
     public CodeQuest() {
         // Inicializar el controlador de datos de usuarios
-        this.userFileHandler = new FileHandler<User>("users.dat");
+        this.userFileHandler = new FileHandler<User>("data/users.dat");
         this.userController = new DataManager<User>(userFileHandler);
     }
 
@@ -62,8 +62,11 @@ public class CodeQuest {
         if (isChangeUser) {
             // Cerrar la ventana actual y volver a mostrar la GUI de autenticación
             appGUI.dispose();
-            authGUI.clearFields();
+            authGUI.clearFields(); 
             authGUI.setVisible(true);
+            userController.deleteData(currentUser.getId());
+	        userController.addData(currentUser);
+	        userController.saveData();
             currentUser = null; // Limpiar el usuario actual
         } 
     }

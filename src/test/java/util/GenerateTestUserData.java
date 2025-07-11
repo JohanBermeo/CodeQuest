@@ -15,7 +15,8 @@ public class GenerateTestUserData {
         if (!dir.exists()) {
             dir.mkdirs();
         }
-        DataManager<User> dataManager = new DataManager<>(testFile);
+        com.codequest.model.FileHandler<User> fileHandler = new com.codequest.model.FileHandler<>(testFile);
+        DataManager<User> dataManager = new DataManager<>(fileHandler);
         
         // Limpiar datos existentes
         dataManager.setData(new ArrayList<>());

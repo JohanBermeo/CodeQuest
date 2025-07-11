@@ -5,6 +5,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 import com.codequest.model.content.Challenge;
+import com.codequest.service.Sync.FileUploadData; // Added import for service model
+import com.codequest.service.Sync.SyncService;   // Added import for SyncService
 
 import java.awt.*;
 import java.io.File;
@@ -24,6 +26,7 @@ public class FileUploadDialog extends JDialog {
     private Consumer<UploadData> onSubmitCallback;
     private String uploadType;
     private boolean isSubmitted = false;
+    private SyncService syncService; // Added SyncService instance
 
     private JComboBox<String> challengeComboBox;
     private List<Challenge> challenges;
@@ -32,6 +35,7 @@ public class FileUploadDialog extends JDialog {
         super(parent, title, true);
         this.uploadType = uploadType;
         this.onSubmitCallback = onSubmitCallback;
+        this.syncService = new SyncService(); // Initialize SyncService
 
         initializeComponents();
         setupLayouts();
@@ -48,6 +52,7 @@ public class FileUploadDialog extends JDialog {
         this.uploadType = uploadType;
         this.onSubmitCallback = onSubmitCallback;
         this.challenges = challenges;
+        this.syncService = new SyncService(); // Initialize SyncService
 
         initializeComponents();
         setupLayouts();
@@ -159,29 +164,38 @@ public class FileUploadDialog extends JDialog {
 
     private void submitUpload() {
         if (validateInput()) {
-            UploadData uploadData;
+            String title = titleField.getText().trim();
+            String content = contentArea.getText().trim();
+            String selectedChallengeTitle = null;
+
             if (uploadType.equals("SOLUTION")) {
-                // obtener el ID del challenge seleccionado en el JComboBox
-                String selectedChallengeTitle = (String) challengeComboBox.getSelectedItem();
-                uploadData = new UploadData(
-                    titleField.getText().trim(),
-                    contentArea.getText().trim(),
-                    uploadType, selectedChallengeTitle
-                );
-            }
-            else {
-                uploadData = new UploadData(
-                    titleField.getText().trim(),
-                    contentArea.getText().trim(),
-                    uploadType
-                );
+                selectedChallengeTitle = (String) challengeComboBox.getSelectedItem();
             }
 
-            isSubmitted = true;
-            if (onSubmitCallback != null) {
-                onSubmitCallback.accept(uploadData);
+            // Create UI layer UploadData for callback
+            UploadData uiUploadData = new UploadData(title, content, uploadType, selectedChallengeTitle);
+
+            // Create Service layer FileUploadData for saving
+            com.codequest.service.Sync.FileUploadData serviceUploadData =
+                new com.codequest.service.Sync.FileUploadData(title, content, uploadType, selectedChallengeTitle);
+
+            // Save the data using SyncService
+            boolean success = syncService.saveUploadData(serviceUploadData);
+
+            if (success) {
+                isSubmitted = true;
+                if (onSubmitCallback != null) {
+                    onSubmitCallback.accept(uiUploadData); // Pass UI specific data model
+                }
+                showStatus("Datos guardados exitosamente!", false);
+                // Dispose after a short delay to allow user to see success message
+                Timer timer = new Timer(1500, e -> dispose());
+                timer.setRepeats(false);
+                timer.start();
+            } else {
+                showStatus("Error: No se pudieron guardar los datos.", true);
+                // Optionally, do not dispose the dialog if saving fails, allowing user to retry or copy data.
             }
-            dispose();
         }
     }
     

@@ -10,7 +10,7 @@ public class LockManager {
 
  
     public LockManager(File targetFile) {
-        File parentDir = new File(System.getProperty("user.home"), "Documentos/compartida");
+        File parentDir = new File(System.getProperty("user.home"), "compartida/CodeQuest");
         String lockFileName = targetFile.getName() + ".lock";
         this.lockFile = new File(parentDir, lockFileName);
     }
